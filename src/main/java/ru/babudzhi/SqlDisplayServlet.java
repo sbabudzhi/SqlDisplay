@@ -17,13 +17,10 @@ public class SqlDisplayServlet extends HttpServlet {
     String name2 = "";
     String name3 = "";
 
-    private static final String CREATE_QUERY =
-            "CREATE TABLE IF NOT EXISTS TEST123 (name3 VARCHAR(45), name1 VARCHAR(45), name2 varchar (45))";
-
+    private static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS TEST123 (name3 VARCHAR(45), name1 VARCHAR(45), name2 varchar (45))";
     private String DATA_QUERY = "";
+    private static final String DELETE_QUERY =  "DROP TABLE IF EXISTS TEST123";
 
-    private static final String DELETE_QUERY =
-            "DROP TABLE IF EXISTS TEST123";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -62,17 +59,6 @@ public class SqlDisplayServlet extends HttpServlet {
 
                 dataQuery.execute(CREATE_QUERY);
                 dataQuery.execute(DATA_QUERY);
-            }
-
-            try (PreparedStatement query =
-                         db.prepareStatement("SELECT * FROM TEST123")) {
-                ResultSet rs = query.executeQuery();
-                while (rs.next()) {
-//                    System.out.println(String.format("%s  %s %s ",
-//                            rs.getString(1),
-//                            rs.getString("name1")));
-                }
-                rs.close();
             }
         } catch (SQLException ex) {
             System.out.println("Database connection failure: "

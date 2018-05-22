@@ -19,12 +19,10 @@
     Connection db = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
     PreparedStatement query = db.prepareStatement("SELECT * FROM TEST123");
     ResultSet rs = query.executeQuery();
-    PrintWriter outs = response.getWriter();
-
 
     while (rs.next()) {
-    out.println(String.format("%s %s %s ",rs.getString(1), rs.getString(2), rs.getString(3)));
-    out.println("<br>");
+        out.println(String.format("%s %s %s ",rs.getString(1), rs.getString(2), rs.getString(3)));
+        out.println("<br>");
     }
 %>
 

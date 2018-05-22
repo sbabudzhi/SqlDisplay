@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
-<%--<%@ page session="true"  %>--%>
-
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,9 +17,6 @@
             <input type="text" name="firstName" onkeydown="if(event.keyCode==13){return false;}">
             <input type="text" name="middleName" onkeydown="if(event.keyCode==13){return false;}"> </p>
         <input type="submit" name="enter">
-
-
-
     </form>
 </div>
 
