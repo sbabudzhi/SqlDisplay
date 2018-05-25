@@ -8,14 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @WebServlet("/bd")
 public class SqlDisplayServlet extends HttpServlet {
 
-    String name1 = "";
-    String name2 = "";
-    String name3 = "";
+    public String name1 = "";
+    public String name2 = "";
+    public String name3 = "";
 
     private static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS TEST123 (name3 VARCHAR(45), name1 VARCHAR(45), name2 varchar (45))";
     private String DATA_QUERY = "";
@@ -27,7 +29,7 @@ public class SqlDisplayServlet extends HttpServlet {
         /* возвращается ссылка на сессию для текущего пользователя (если сессия еще не существует, то она при этом создается) */
         response.setContentType("text/html;charset=utf8");
         HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
+
 
         if(request.getParameter("firstName")!=null){
             name1 = new String(request.getParameter("firstName").getBytes("iso-8859-1"), "utf8");
@@ -58,16 +60,36 @@ public class SqlDisplayServlet extends HttpServlet {
                 dataQuery.execute(DELETE_QUERY);
 
                 dataQuery.execute(CREATE_QUERY);
+                if(name1 != null && name2 != null && name3 != null)
                 dataQuery.execute(DATA_QUERY);
             }
-        } catch (SQLException ex) {
+
+            PreparedStatement query = db.prepareStatement("SELECT * FROM TEST123");
+            ResultSet rs = query.executeQuery();
+            List<String> listResults=convertToList(rs);
+            session.setAttribute("listResults", listResults);
+
+             } catch (SQLException ex) {
             System.out.println("Database connection failure: "
                     + ex.getMessage());
         }
         response.setContentType("text/html");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
 
+    }
+
+    protected List convertToList(ResultSet rs) throws SQLException {
+        List<String> arrayList = new ArrayList<>();
+        while (rs.next())
+        {
+            String str;
+            str = String.format("%s %s %s ",rs.getString(1), rs.getString(2), rs.getString(3));
+            arrayList.add(str);
+        }
+        return arrayList;
     }
 
 

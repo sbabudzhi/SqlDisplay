@@ -1,30 +1,31 @@
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %>
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.io.PrintWriter" %><%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%--
   Created by IntelliJ IDEA.
   User: Babudzhi
   Date: 22.05.2018
   Time: 13:14
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Results of Data Base</title>
 </head>
 <body>
-<%
-    Connection db = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
-    PreparedStatement query = db.prepareStatement("SELECT * FROM TEST123");
-    ResultSet rs = query.executeQuery();
+<jsp:useBean id="listResults" class="java.util.ArrayList" scope="session"/>
+<b>Список введеных человек:</b>
+<table>
+    <tbody>
+    <c:forEach items="${listResults}" var="test">
+     <p>
+        <c:out value="${test}"/>
+     </p>
+    </c:forEach>
+    </tbody>
+</table>
 
-    while (rs.next()) {
-        out.println(String.format("%s %s %s ",rs.getString(1), rs.getString(2), rs.getString(3)));
-        out.println("<br>");
-    }
-%>
+
 
 </body>
 </html>
