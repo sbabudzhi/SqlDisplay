@@ -1,4 +1,15 @@
 <%@ page contentType="text/html;charset=utf-8" %>
+<% String userId = "";
+    boolean dropTable = false;
+    if(session.isNew()) {
+        dropTable = true;
+        userId = session.getId();
+    }
+    request.setAttribute("dropTable", dropTable);
+    request.setAttribute("userId", userId);
+    request.setAttribute("session1",session);
+
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,14 +31,8 @@
     </form>
 </div>
 
-<form action="results.jsp">
+<form method="get" action="res">
     <p> <input type="submit" name="res" value="Результат" ></p>
 </form>
 </body>
 </html>
-<%
-    boolean dropTable = false;
-    if(session.isNew())
-        dropTable = true;
-    session.setAttribute("dropTable", dropTable);
-%>

@@ -13,11 +13,12 @@
     <title>Results of Data Base</title>
 </head>
 <body>
-<jsp:useBean id="listResults" class="java.util.ArrayList" scope="session"/>
+<%--<jsp:useBean id="listResults" class="java.util.ArrayList" scope="session"/>--%>
+
 <b>Список введеных человек:</b>
 <table>
     <tbody>
-    <c:forEach items="${listResults}" var="test">
+    <c:forEach items="${model}" var="test">
      <p>
         <c:out value="${test}"/>
      </p>
